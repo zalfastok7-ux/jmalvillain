@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "sepatu casual-fatboy chanz",
+    "price": 175000,
+    "category": "shoes",
+    "image": "images/product1.jpeg",
+    "link": "https://s.shopee.co.id/5LCQ2m4eLj"
+  },
+  {
+    "id": 2,
+    "name": "XPRIME - SPEEDCATION",
+    "price": 153000,
+    "category": "shoes",
+    "image": "images/product2.jpeg",
+    "link": "https://s.shopee.co.id/4LJss4keot/"
+  },
+  {
+    "id": 3,
+    "name": "EDINAL kemeja workshirt",
+    "price": 77549,
+    "category": "shirt",
+    "image": "images/product3.jpeg",
+    "link": "https://s.shopee.co.id/5LCQ4HpqZQ"
+  },
+  {
+    "id": 4,
+    "name": "LVP-oversize shirt",
+    "price": 31662,
+    "category": "shirt",
+    "image": "images/product4.jpeg",
+    "link": "https://s.shopee.co.id/9V1z2KpJR2"
+  },
+  {
+    "id": 5,
+    "name": "Minimalist Watch",
+    "price": 159000,
+    "category": "accessories",
+    "image": "https://images.unsplash.com/photo-1524805444758-089113d48a6d",
+    "link": "https://shopee.co.id/"
+  },
+  {
+    "id": 6,
+    "name": "Vintage Jacket",
+    "price": 199000,
+    "category": "shirt",
+    "image": "https://images.unsplash.com/photo-1551028719-00167b16eac5",
+    "link": "https://shopee.co.id/"
+  }
+]

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>jmalvillain.store — Favorites</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <header class="topbar">
+
+        <a href="index.html" class="logo">
+            jmalvillain.store
+        </a>
+
+        <span class="page-title">
+            FAVORITES
+        </span>
+
+    </header>
+
+
+    <!-- FAVORITES -->
+
+    <main class="market">
+
+        <div class="market-intro">
+
+            <p class="section-label">
+                SAVED ITEMS
+            </p>
+
+            <h1>
+                Things<br>
+                you like.
+            </h1>
+
+            <p class="intro-text">
+                Your favorite products in one place.
+            </p>
+
+        </div>
+
+
+        <!-- FAVORITE PRODUCTS -->
+
+        <section
+            id="favoriteList"
+            class="product-grid">
+        </section>
+
+
+        <!-- EMPTY STATE -->
+
+        <div
+            id="emptyFavorites"
+            class="empty-favorites">
+
+            <p>
+                You haven't saved anything yet.
+            </p>
+
+            <a href="index.html">
+                BROWSE MARKET
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <!-- BOTTOM NAVIGATION -->
+
+    <nav class="bottom-nav">
+
+        <a
+            href="index.html"
+            class="bottom-item">
+
+            <span>⌂</span>
+            <small>Market</small>
+
+        </a>
+
+
+        <a
+            href="design.html"
+            class="bottom-item">
+
+            <span>✦</span>
+            <small>Design</small>
+
+        </a>
+
+
+        <a
+            href="favorites.html"
+            class="bottom-item active">
+
+            <span>♡</span>
+            <small>Favorites</small>
+
+        </a>
+
+
+        <a
+            href="profile.html"
+            class="bottom-item">
+
+            <span>●</span>
+            <small>Profile</small>
+
+        </a>
+
+    </nav>
+
+
+    <script>
+
+        const favoriteList =
+            document.getElementById("favoriteList");
+
+        const emptyFavorites =
+            document.getElementById("emptyFavorites");
+
+
+        let favorites = JSON.parse(
+            localStorage.getItem("jmalvillainFavorites")
+        ) || [];
+
+
+        async function loadFavorites() {
+
+            try {
+
+                const response =
+                    await fetch("products.json");
+
+                if (!response.ok) {
+                    throw new Error(
+                        "products.json tidak ditemukan"
+                    );
+                }
+
+                const products =
+                    await response.json();
+
+
+                const favoriteProducts =
+                    products.filter(product =>
+                        favorites.includes(product.id)
+                    );
+
+
+                favoriteList.innerHTML = "";
+
+
+                if (favoriteProducts.length === 0) {
+
+                    emptyFavorites.style.display =
+                        "block";
+
+                    return;
+
+                }
+
+
+                emptyFavorites.style.display =
+                    "none";
+
+
+                favoriteProducts.forEach(product => {
+
+                    const card =
+                        document.createElement("article");
+
+                    card.className =
+                        "product-card";
+
+
+                    card.innerHTML = `
+
+                        <img
+                            class="product-image"
+                            src="${product.image}"
+                            alt="${product.name}"
+                        >
+
+
+                        <button
+                            class="favorite-button active"
+                            data-id="${product.id}"
+                        >
+                            ♥
+                        </button>
+
+
+                        <div class="product-info">
+
+                            <div class="product-name">
+                                ${product.name}
+                            </div>
+
+
+                            <div class="product-price">
+                                Rp ${product.price.toLocaleString("id-ID")}
+                            </div>
+
+
+                            <a
+                                class="view-product"
+                                href="${product.link}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                VIEW PRODUCT
+                            </a>
+
+                        </div>
+
+                    `;
+
+
+                    favoriteList.appendChild(card);
+
+                });
+
+
+                document
+                    .querySelectorAll(".favorite-button")
+                    .forEach(button => {
+
+                        button.addEventListener(
+                            "click",
+                            () => {
+
+                                const id =
+                                    Number(
+                                        button.dataset.id
+                                    );
+
+
+                                favorites =
+                                    favorites.filter(
+                                        favoriteId =>
+                                            favoriteId !== id
+                                    );
+
+
+                                localStorage.setItem(
+                                    "jmalvillainFavorites",
+                                    JSON.stringify(
+                                        favorites
+                                    )
+                                );
+
+
+                                loadFavorites();
+
+                            }
+                        );
+
+                    });
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                favoriteList.innerHTML = `
+                    <p>Favorite gagal dimuat.</p>
+                `;
+
+            }
+
+        }
+
+
+        loadFavorites();
+
+    </script>
+
+</body>
+
+</html>
